@@ -1,0 +1,29 @@
+
+
+#define macro Main() = takes(0) returns(0) {
+    0x20
+    0x00
+    mstore
+
+    0xd
+    0x20
+    mstore
+
+    __RIGHTPAD(0x48656c6c6f2c20776f726c6421)
+    0x40
+    mstore
+
+    0x60
+    0x00
+    return
+} // The seaport way!
+
+#define macro Seaport() = takes(0) returns(0) {
+    0x20
+    0x00
+    mstore
+
+    0x0d48656c6c6f2c20776f726c6421 // The seaport way!
+    0x2d
+    mstore
+}
