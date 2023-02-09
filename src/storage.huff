@@ -1,0 +1,39 @@
+#define setValue(uint256) nonpayable returns ()
+#define getValue() nonpayable returns (uint256)
+
+#define constant VALUE = FREE_STORAGE_POINTER();
+
+#define macro MAIN() = takes(0) returns(0) {
+    0x00
+    calldataload // [calldata]
+    0xE0 // [0xE0, calldata]
+    shr // [sig]
+
+    dup1 __FUNC_SIG(setValue) eq setValue jumpi
+    dup1 __FUNC_SIG(getValue) eq getValue jumpi
+
+    setValue: SET_VALUE()
+    getValue: GET_VALUE()
+
+    0x00 0x00 revert
+}
+
+#define macro SET_VALUE() = takes(0) returns(0) {
+    0x04 // [0x04]
+    calldataload // [calldata]
+
+    [VALUE] // [value_ptr, calldata]
+    sstore
+}
+
+#define macro GET_VALUE() = takes(0) returns(0) {
+    [VALUE] // [value_ptr]
+    sload // [value]
+
+    0x00 // [0x00, value]
+    mstore // []
+
+    0x20 // [0x20]
+    0x00 // [0x00]
+    return
+}
